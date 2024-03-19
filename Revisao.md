@@ -1,0 +1,75 @@
+## Modelo MVT
+  - Framework Django:
+    - Model (OO e BD via MOR)
+    - View (regras de negócio - CRUD)
+    - Template (comunicação com usuário - html e css)
+## Virtualenv
+  - ambiente virtual - venv
+    - container ou um docker sem o Sistema Operacional
+      - pacotes diversos e com versões diferentes
+    - A partir do Python 3.9, os principais programas satélites do python-django (virtualenv, pip, ...) já estão embutidos no Python
+        c:\>python -m venv venv
+        c:\>python -m pip install -r requirements.txt
+        c:\>python -m pip upgrade certifi
+## Clonando e iniciando um projeto 
+  - clonar repositório
+  - criar venv
+  - ativar a venv -- venv\Scripts\activate (windows) ---- source venv/activate (linux)
+  - instalar pacotes
+  - iniciar servidor
+
+## Projeto Python-Django
+
+Presença do modelo MVT
+    - M - model: orientação a objetos que será convertida em BD
+        - é um arquivo com nome models.py
+    - V - view:  regras do negócios e todos os CRUD
+        - é um arquivo com nome views.py
+    - T - template: páginas html e css (com apoio do Bootstrap)
+
+Projeto do sistema desenvolvido
+    - todo projeto tem em comum:
+        - core: pasta com os html da home ou do ambiente já logado do sistema
+        - projeto: configuração do sistema
+        - demais apps (subsistemas criados pela equipe ou pelo programador)
+
+
+## Fluxo de desenvolvimento da app (subsistema)
+
+    1) criar ou copiar app
+    2) criar ou reutilizar/adaptar o models.py
+    3) criar ou reutilizar/adaptar o views.py
+    4) criar ou reutilizar/adaptar a pasta template
+    5) criar ou reutilizar/adaptar o arquivo urls.py dentro do app
+    6) atualizar o arquivo urls.py do projeto, avisando sobre o app
+    7) liberar o acesso ao app em um menu ou página do sistema
+        - core do sistema, pasta template
+    8) adicionar em projeto/projeto/settings.py o app no campo INSTALLED_APPS
+    9) gerar as migrações
+        - python projeto/manage.py makemigrations -> gera os scritps do sql escolhido
+        - python projeto/manage.py migrate        -> roda os scripts gerados e cria a tabela
+
+## Criando primeiro usuário de acesso
+
+No shell do Django (com venv ativa)
+
+python projeto\manage.py shell
+
+#importando a classe Usuario
+from usuario.models import Usuario
+
+#criando um objeto do tipo Usuario
+u = Usuario
+u.tipo = 'ADMINSTRADOR'
+u.nome = 'Gustavo Barros'
+u.apelido = 'Gugu'
+u.celular = '99998765'
+u.is_active = True
+u.email = 'gbarros@ufn.edu.br'
+
+#persistir no banco
+u.save()
+
+#definir senha com criptografia
+u.set_password('gbarros@ufn.edu.br')
+u.save()
